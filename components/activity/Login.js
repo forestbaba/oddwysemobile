@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {
     SafeAreaView,
     StyleSheet,
@@ -8,8 +8,9 @@ import {
     StatusBar, TextInput, Image
 } from 'react-native';
 import CardView from 'react-native-cardview'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-class Login extends Component{
+class Login extends Component {
     static navigationOptions = {
         title: 'Login',
         // headerStyle: {
@@ -21,57 +22,53 @@ class Login extends Component{
         // },
 
     };
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.viewStyle}>
                 <ScrollView>
-                <Text style={styles.letsLogin}>Let's log you in...</Text>
+                    <Text style={styles.letsLogin}>Let's log you in...</Text>
 
-                <View style={styles.cardviewStyle}>
-                    <CardView
-                        cardElevation={2}
-                        cardMaxElevation={2}
-                        cornerRadius={15}
-                    >
-                        <TextInput
-                            placeholder="username or email"
-                            underlineColorAndroid='transparent'
-                            style={styles.TextInputStyleClass} />
+                    <View style={styles.cardviewStyle}>
+                        <CardView
+                            cardElevation={2}
+                            cardMaxElevation={2}
+                            cornerRadius={15}
+                        >
+                            <TextInput
+                                placeholder="username or email"
+                                underlineColorAndroid='transparent'
+                                style={styles.TextInputStyleClass} />
 
-                        <TextInput
-                            placeholder="password"
-                            underlineColorAndroid='transparent'
-                            style={styles.passwordInput} />
+                            <TextInput
+                                placeholder="password"
+                                underlineColorAndroid='transparent'
+                                style={styles.passwordInput} />
 
-                        <TouchableOpacity style={styles.loginButton}>
+                            <TouchableOpacity style={styles.loginButton}>
+                                <Text style={styles.loginButtonText}
+                                    onPress={() => this.props.navigation.navigate('TabHolder')}>Login</Text>
+                            </TouchableOpacity>
+                            <View style={styles.socialsContainer}>
+                                <TouchableOpacity style={styles.googleStyle} activeOpacity={0.5}>
+                                    <Icon name="facebook" size={25} color="#FFFFFF" />
+                                </TouchableOpacity>
+                                <Text>Login with socials</Text>
+                                <TouchableOpacity style={styles.facebookStyle} activeOpacity={0.5}>
+                                    <Image
+                                        source={require('../../assets/images/facebook.png')}
+                                        style={styles.ImageIconStyle}
+                                    /></TouchableOpacity>
+                            </View>
 
-                            <Text style={styles.loginButtonText}>
-                                Login
-          </Text>
-                        </TouchableOpacity>
-                        <View style={styles.socialsContainer}>
-                            <TouchableOpacity style={styles.googleStyle} activeOpacity={0.5}>
-                                <Image
-                                    source={require('../../assets/images/google-plus.png')}
-                                    style={styles.ImageIconStyle}
-                                /></TouchableOpacity>
-                            <Text>Login with socials</Text>
-                            <TouchableOpacity style={styles.facebookStyle} activeOpacity={0.5}>
-                                <Image
-                                    source={require('../../assets/images/facebook.png')}
-                                    style={styles.ImageIconStyle}
-                                /></TouchableOpacity>
-                        </View>
-
-                        <TouchableOpacity 
-                        style={styles.forgotPasswordButton}
+                            <TouchableOpacity
+                                style={styles.forgotPasswordButton}
                                 onPress={() => this.props.navigation.navigate('ForgotPassword')}>
-                            <Text style={styles.forgotPasswordButtonText}>Forgot Password ?</Text>
-                        </TouchableOpacity>
+                                <Text style={styles.forgotPasswordButtonText}>Forgot Password ?</Text>
+                            </TouchableOpacity>
 
-                    </CardView>
+                        </CardView>
 
-                </View>
+                    </View>
                 </ScrollView>
 
                 <CardView
@@ -89,7 +86,7 @@ class Login extends Component{
                     </View>
                 </CardView>
             </View>
-       
+
         )
     }
 }
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
         marginLeft: 25,
         marginRight: 25,
         flex: 3,
-        marginTop:20,
+        marginTop: 20,
         marginBottom: 70,
 
         // flexWrap: "wrap",

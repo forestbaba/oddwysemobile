@@ -11,9 +11,15 @@
     "react": "16.8.6",
     "react-native": "0.60.4",
     "react-native-cardview": "^2.0.2",
-    "react-native-floating-action": "^1.17.0",
+    "react-native-drawer-menu": "^0.2.5",
+    "react-native-elements": "^1.1.0",
     "react-native-gesture-handler": "^1.3.0",
-    "react-navigation": "^3.11.1"
+    "react-native-hide-show-password-input": "^1.1.0",
+    "react-native-material-textinput": "^1.1.0",
+    "react-native-navigation": "^2.26.3",
+    "react-native-vector-icons": "^6.6.0",
+    "react-navigation": "^3.11.1",
+    "react-pose": "^4.0.8"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

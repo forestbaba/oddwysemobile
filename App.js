@@ -1,7 +1,131 @@
+// import React, { Component } from 'react';
+// import {
+//   View, Image, TouchableOpacity, Dimensions,
+// } from 'react-native';
+
+// import {
+//   createDrawerNavigator,
+//   createStackNavigator,
+//   createAppContainer,
+// } from 'react-navigation';
+// import Icon from 'react-native-vector-icons/FontAwesome';
+// import Screen1 from './components/activity/Login';
+// import Screen2 from './components/activity/Signup';
+// import Timeline from './components/activity/Timeline';
+// import Signup from './components/activity/Signup'
+// import ForgotPassword from './components/activity/ForgotPassword'
+// import CustomSidebarMenu from './components/activity/CustomSidebar'
+// import Container from './components/ScreenContainer';
+
+
+// class NavigationDrawerStructure extends Component {
+//   toggleDrawer = () => {
+//     this.props.navigationProps.toggleDrawer();
+//   };
+//   render() {
+//     return (
+//       <View style={{ flexDirection: 'row' }}>
+//         <Container />
+
+//         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
+//           <Icon name="bars" size={25} color="#FFFFFF" />
+//         </TouchableOpacity>
+//       </View>
+//     );
+//   }
+// }
+
+
+// const FirstActivity_StackNavigator = createStackNavigator({
+//   First: {
+//     screen: Screen1,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Demo Screen 1',
+//       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+//       headerStyle: {
+//         backgroundColor: '#FF9800',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
+
+// const Screen2_StackNavigator = createStackNavigator({
+//   Second: {
+//     screen: Screen2,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Demo Screen 2',
+//       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+//       headerStyle: {
+//         backgroundColor: '#FF9800',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
+
+
+// const Timeline_StackNavigator = createStackNavigator({
+//   Third: {
+//     screen: Timeline,
+//     navigationOptions: ({ navigation }) => ({
+//       title: 'Demo Screen 3',
+//       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+//       headerStyle: {
+//         backgroundColor: '#FF9800',
+//       },
+//       headerTintColor: '#fff',
+//     }),
+//   },
+// });
+
+// const ForgotPassword_StackNavigator = createStackNavigator({
+//   forgotpass: {
+//     screen: ForgotPassword,
+//   },
+// });
+
+// const DrawerNavigatorExample = createDrawerNavigator({
+//   Screen1: {
+//     screen: FirstActivity_StackNavigator,
+//     navigationOptions: {
+//       drawerLabel: 'Demo Screen 1',
+//     },
+//   },
+//   Screen2: {
+//     screen: Screen2_StackNavigator,
+//     navigationOptions: {
+//       drawerLabel: 'Demo Screen 2',
+//     },
+//   },
+//   Timeline: {
+//     screen: Timeline_StackNavigator,
+//     navigationOptions: {
+//       drawerLabel: 'Demo Screen 3',
+//     },
+//     ForgotPassword: {
+//       screen: ForgotPassword,
+//     },
+//   },
+
+// }, {
+//     contentComponent: CustomSidebarMenu,
+//     drawerWidth: Dimensions.get('window').width - 130,
+//   }
+// );
+
+// export default createAppContainer(DrawerNavigatorExample);
+
+
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Container from './ScreenContainer';
+import { Navigation } from 'react-native-navigation';
+import TimeLine from './components/activity/Timeline'
+
+
+
+import Container from './components/ScreenContainer';
 
 class App extends Component {
   render() {
@@ -12,146 +136,3 @@ class App extends Component {
 }
 export default App;
 
-
-// const RootStack = createStackNavigator(
-//   {
-//     Home: { screen: HomeActivity },
-//     Profile: { screen: ProfileActivity },
-//   },
-//   {
-//     initialRouteName: 'Home',
-//   }
-
-// );
-
-// const App = createAppContainer(RootStack);
-
-
-// export default class App extends Component {
-//   render() {
-//     return <RootStack />;
-//   }
-// }
-
-// YellowBox.ignoreWarnings(
-//   ['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader'
-//   ]);
-
-
-
-
-
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  * @flow
-//  */
-
-// import React, {Fragment} from 'react';
-// import {
-//   SafeAreaView,
-//   StyleSheet,
-//   ScrollView,
-//   View,
-//   Text,
-//   StatusBar,
-// } from 'react-native';
-
-// import {
-//   Header,
-//   LearnMoreLinks,
-//   Colors,
-//   DebugInstructions,
-//   ReloadInstructions,
-// } from 'react-native/Libraries/NewAppScreen';
-
-// const App = () => {
-//   return (
-//     <Fragment>
-//       <StatusBar barStyle="dark-content" />
-//       <SafeAreaView>
-//         <ScrollView
-//           contentInsetAdjustmentBehavior="automatic"
-//           style={styles.scrollView}>
-//           <Header />
-//           {global.HermesInternal == null ? null : (
-//             <View style={styles.engine}>
-//               <Text style={styles.footer}>Engine: Hermes</Text>
-//             </View>
-//           )}
-//           <View style={styles.body}>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Step One</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Edit <Text style={styles.highlight}>App.js</Text> to change this
-//                 screen and then come back to see your edits.
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>See Your Changes</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <ReloadInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Debug</Text>
-//               <Text style={styles.sectionDescription}>
-//                 <DebugInstructions />
-//               </Text>
-//             </View>
-//             <View style={styles.sectionContainer}>
-//               <Text style={styles.sectionTitle}>Learn More</Text>
-//               <Text style={styles.sectionDescription}>
-//                 Read the docs to discover what to do next:
-//               </Text>
-//             </View>
-//             <LearnMoreLinks />
-//           </View>
-//         </ScrollView>
-//       </SafeAreaView>
-//     </Fragment>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   scrollView: {
-//     backgroundColor: Colors.lighter,
-//   },
-//   engine: {
-//     position: 'absolute',
-//     right: 0,
-//   },
-//   body: {
-//     backgroundColor: Colors.white,
-//   },
-//   sectionContainer: {
-//     marginTop: 32,
-//     paddingHorizontal: 24,
-//   },
-//   sectionTitle: {
-//     fontSize: 24,
-//     fontWeight: '600',
-//     color: Colors.black,
-//   },
-//   sectionDescription: {
-//     marginTop: 8,
-//     fontSize: 18,
-//     fontWeight: '400',
-//     color: Colors.dark,
-//   },
-//   highlight: {
-//     fontWeight: '700',
-//   },
-//   footer: {
-//     color: Colors.dark,
-//     fontSize: 12,
-//     fontWeight: '600',
-//     padding: 4,
-//     paddingRight: 12,
-//     textAlign: 'right',
-//   },
-// });
-
-// export default App;
