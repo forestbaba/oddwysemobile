@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     settingsContent: {
-        // flex: 1,
+        flex: 1,
         width: "100%",
         height: "100%",
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         //  marginTop: 150
     },
     scrollContainer: {
-        // flex:1
+        flex:1
     },
     settingsRow: {
         flexDirection: 'row',

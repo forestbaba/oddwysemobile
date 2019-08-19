@@ -2,11 +2,14 @@ import React from 'react';
 
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FAwesomIcon from 'react-native-vector-icons/FontAwesome'
+import FAwesomIcon5 from 'react-native-vector-icons/FontAwesome5'
+import { white } from 'ansi-colors';
 
-const CreateGame = () => {
+const CreateGame = (props) => {
     return (
-        <View style={{ alignSelf:"stretch"}}>
-            <View style={styles.createGameShadow}/>
+        <View style={{ alignSelf: "stretch" }}>
+            <View />
 
             <View style={styles.itemContainerWrapper}>
                 {/* <Animated.View style={styles.itemContainerWrapper}> */}
@@ -14,20 +17,24 @@ const CreateGame = () => {
 
             </View>
             <View style={styles.itemContainer}>
-                <MCIcon name="cards-spade" size={25} color="white" />
-                <TouchableOpacity>
+                <TouchableOpacity onPress={props.hideMe}><FAwesomIcon name="soccer-ball-o" size={25} color="white" style={{ marginTop:12}} /></TouchableOpacity>
+
+            </View>
+            <View style={styles.itemContainer}>
+                <FAwesomIcon5 name="football-ball" size={25} color="white" style={styles.iconStyle}/>
+                <TouchableOpacity onPress={props.showTicket}>
                     <Text style={styles.itemTitle}>Ticket</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.itemContainer}>
-                <MCIcon name="cards-heart" size={25} color="white" />
-                <TouchableOpacity>
-                    <Text style={styles.itemTitle}>Games</Text>
+                <FAwesomIcon5 name="golf-ball" size={25} color="white" style={styles.iconStyle}/>
+                <TouchableOpacity onPress={props.showClub}>
+                    <Text style={styles.itemTitle}>Club</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.itemContainer}>
-                <MCIcon name="cards-diamond" size={25} color="white" />
-                <TouchableOpacity>
+                <FAwesomIcon5 name="bowling-ball" size={25} color="white" style={styles.iconStyle}/>
+                <TouchableOpacity onPress={props.showCustom}>
                     <Text style={styles.itemTitle}>Custom</Text>
                 </TouchableOpacity>
             </View>
@@ -45,8 +52,9 @@ const styles = StyleSheet.create({
 
     },
     itemTitle: {
-        marginTop: 5,
-        marginLeft: 10
+        marginTop: 25,
+        marginLeft: 10,
+        color: "white"
     },
     fab: {
         borderWidth: 1,
@@ -65,9 +73,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#01a699',
         position: 'absolute',
         width: 35,
-        height: 100,
+        height: 185,
         borderRadius: 25,
-        marginTop: 5,
+        marginTop: 10,
         marginLeft: 5,
         // transform: [
         //     {
@@ -104,8 +112,11 @@ const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: 'rgba(52, 52, 52, 0.8)',
         position: 'absolute',
-        alignSelf:"stretch"
+        alignSelf: "stretch"
         //  marginTop: 150
     },
+    iconStyle: {
+        marginTop: 15
+    }
 })
 export default CreateGame;

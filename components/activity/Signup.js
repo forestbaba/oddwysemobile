@@ -16,6 +16,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import CardView from 'react-native-cardview'
 import { StackNavigator } from 'react-navigation';
+import PasswordFIeld from '../common/PasswordField'
+
 // import rsvg from 'react-native-svg'
 // import Index from './app/components/login/index'
 
@@ -55,11 +57,7 @@ class Signup extends Component {
                                     placeholder="mobile number"
                                     underlineColorAndroid='transparent'
                                     style={styles.passwordInput} />
-                                <TextInput
-                                    placeholder="password"
-                                    underlineColorAndroid='transparent'
-                                    style={styles.passwordInput} />
-
+                                <PasswordFIeld placeholder="password"/>
                                 <TouchableOpacity style={styles.loginButton}>
 
                                     <Text style={styles.loginButtonText}>
@@ -192,7 +190,9 @@ const styles = StyleSheet.create({
     },
     signupButtonText: {
         marginLeft: 10,
-        color: '#04823A'
+        color: '#04823A',
+        fontWeight: "bold",
+        fontSize: 20
     },
     signupCard: {
         // marginLeft: 25,

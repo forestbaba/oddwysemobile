@@ -1,38 +1,46 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { bold } from 'ansi-colors';
 class Ticket extends React.Component {
     render() {
         return (
             <View>
-                <View>
-                    <View>
-                        <Text>Ticket Number</Text>
-                        <Text>KLMN12GHT0U</Text>
-                    </View>
-                    <View>
-                        <Text> Serial Number</Text>
-                        <Text>OW129783JU</Text>
-                    </View>
-                    <View>
-                        <Text>Date Created</Text>
-                        <Text>June 3, 2019 11:23 pm</Text>
-                    </View>
-                    <View>
-                        <Text>Valid from:</Text>
-                        <Text>June 4,2019 11:12 pm</Text>
-                    </View>
-                    <View>
-                        <Text>Valid Till:</Text>
-                        <Text>June 9, 2019 11:12pm</Text>
-                    </View>
-                    <View>
-                        <Text>Status</Text>
-                        <Text>Active</Text>
-                    </View>
+                <ScrollView>
+                    <View style={{ margin: 10, padding: 10 }}>
 
-                </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Ticket Number(s)</Text>
+                            <Text style={styles.detailsText}>KLMN12GHT0U</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Vendor</Text>
+                            <Text style={styles.detailsText}>Nairabet</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}> Serial Number</Text>
+                            <Text style={styles.detailsText}>OW129783JU</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Date Created</Text>
+                            <Text style={styles.detailsText}>June 3, 2019 11:23 pm</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Valid from:</Text>
+                            <Text style={styles.detailsText}>June 4,2019 11:12 pm</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Valid Till:</Text>
+                            <Text style={styles.detailsText}>June 9, 2019 11:12pm</Text>
+                        </View>
+                        <View style={styles.childContainer}>
+                            <Text style={styles.titleText}>Status</Text>
+                            <Text style={styles.detailsText}>Active</Text>
+                        </View>
+
+                    </View>
+                </ScrollView>
+
             </View>
         )
     }
@@ -42,7 +50,21 @@ export default Ticket
 const styles = StyleSheet.create({
     parentComponent: {
         flex: 1
+    },
+    childContainer: {
+        marginTop: 10,
+        marginBottom: 10,
+        color: '#DDDCDC'
+    },
+    titleText: {
+        fontSize: 10,
+        // color:"#Fefefe"
+    },
+    detailsText: {
+        fontWeight: 'bold',
+        fontSize: 15
     }
+
 })
 // class Ticket extends React.Component {
 //     render() {

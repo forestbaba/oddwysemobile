@@ -122,7 +122,8 @@ import { Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Navigation } from 'react-native-navigation';
 import TimeLine from './components/activity/Timeline'
-
+import { Provider } from 'react-redux';
+import store from './redux/store'
 
 
 import Container from './components/ScreenContainer';
@@ -130,7 +131,9 @@ import Container from './components/ScreenContainer';
 class App extends Component {
   render() {
     return (
-      <Container />
+      // <Provider store={store}>
+        <Container />
+      // </Provider>
     );
   }
 }

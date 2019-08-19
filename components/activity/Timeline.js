@@ -46,7 +46,7 @@ import SearchCard from '../common/SearchCard'
 class Timeline extends Component {
 
     componentWillMount() {
-        
+
     }
 
     static navigationOptions = ({ navigation }) => {
@@ -150,10 +150,11 @@ class Timeline extends Component {
                                     <View style={styles.parentComponent}>
 
                                         <View style={styles.profileImage}>
-                                            <Image
-                                                source={require('../../assets/images/userimage.png')}
-                                                style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
-                                            />
+                                            <TouchableOpacity>
+                                                <Image
+                                                    source={require('../../assets/images/userimage.png')}
+                                                    style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
+                                                /></TouchableOpacity>
                                         </View>
                                         <View>
 
@@ -168,9 +169,10 @@ class Timeline extends Component {
                                             If you want to know more, read the the website you'll use this resource on.
                                              If you want to know more, read the</Text>
                                             <View style={styles.postAtt}>
-                                                <Text style={styles.postTime}>3 hrs ago</Text>
-                                                <Text style={styles.likesView}>15 likes</Text>
-                                                <Text style={styles.commentButton}>Comment</Text>
+                                                <Text style={styles.postTime}>
+                                                    <Icon name="clock-o" color="#707070" size={18} /> 3 hrs ago</Text>
+                                                <TouchableOpacity style={styles.likesView}><Text ><Icon name="heart" color="#707070" size={18} /> 15 </Text></TouchableOpacity>
+                                                <TouchableOpacity style={styles.commentButton}><Text ><Icon name="comments" color="#707070" size={18} /> 16</Text></TouchableOpacity>
                                             </View>
                                         </View>
                                     </View>
@@ -387,18 +389,18 @@ const styles = StyleSheet.create({
     },
     postWidget: {
         alignItems: "flex-start",
-        justifyContent:'flex-end',
+        justifyContent: 'flex-end',
         backgroundColor: 'red',
         height: 30,
         flexDirection: 'row',
         bottom: 70,
         position: 'absolute',
         width: '100%',
-        paddingRight:20
+        paddingRight: 20
     },
     widgetCancel: {
         paddingBottom: 20,
-        paddingLeft:8
+        paddingLeft: 8
     }
 })
 export default Timeline;

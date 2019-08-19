@@ -5,12 +5,22 @@ import {
     ScrollView,
     View,
     Text, TouchableOpacity,
-    StatusBar, TextInput, Image
+    StatusBar, TextInput, Image, ActivityIndicator,
 } from 'react-native';
 import CardView from 'react-native-cardview'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FIcon from 'react-native-vector-icons/FontAwesome5';
+import { bold } from 'ansi-colors';
+import PasswordFIeld from '../common/PasswordField'
 
 class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            disabled: true,
+            isLoading: false
+        };
+    }
     static navigationOptions = {
         title: 'Login',
         // headerStyle: {
@@ -39,25 +49,27 @@ class Login extends Component {
                                 underlineColorAndroid='transparent'
                                 style={styles.TextInputStyleClass} />
 
-                            <TextInput
-                                placeholder="password"
-                                underlineColorAndroid='transparent'
-                                style={styles.passwordInput} />
+                            <PasswordFIeld placeholder="password" />
 
-                            <TouchableOpacity style={styles.loginButton}>
-                                <Text style={styles.loginButtonText}
-                                    onPress={() => this.props.navigation.navigate('TabHolder')}>Login</Text>
-                            </TouchableOpacity>
+                            <View style={styles.loginButtonAndIndicatorContainer}>
+                                <TouchableOpacity style={styles.loginButton} disabled={this.state.disabled} onPress={() => this.props.navigation.navigate('TabHolder')}>
+                                    <Text style={styles.loginButtonText}>Login</Text>
+                                </TouchableOpacity>
+
+                                {
+                                    this.state.isLoading === true ?
+                                        <ActivityIndicator size="large" color="#FFFFFF" style={styles.indicator} visible={false} />: null
+                                }
+                            </View>
+
                             <View style={styles.socialsContainer}>
-                                <TouchableOpacity style={styles.googleStyle} activeOpacity={0.5}>
-                                    <Icon name="facebook" size={25} color="#FFFFFF" />
+                                <TouchableOpacity style={{ marginRight: 20 }}>
+                                    <FIcon name="facebook" size={35} color="green" />
                                 </TouchableOpacity>
                                 <Text>Login with socials</Text>
-                                <TouchableOpacity style={styles.facebookStyle} activeOpacity={0.5}>
-                                    <Image
-                                        source={require('../../assets/images/facebook.png')}
-                                        style={styles.ImageIconStyle}
-                                    /></TouchableOpacity>
+                                <TouchableOpacity style={{ marginLeft: 20 }}>
+                                    <FIcon name="google" size={35} color="green" />
+                                </TouchableOpacity>
                             </View>
 
                             <TouchableOpacity
@@ -145,11 +157,14 @@ const styles = StyleSheet.create({
         marginRight: 25,
         marginTop: 20,
         marginBottom: 10,
+        flex: 1
     },
     loginButtonText: {
         textAlign: 'center',
         marginTop: 10,
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        fontWeight: "bold",
+        fontSize: 20
     },
     socialsContainer: {
         flexDirection: "row",
@@ -180,7 +195,9 @@ const styles = StyleSheet.create({
 
     },
     forgotPasswordButtonText: {
-        color: '#04823A'
+        color: '#04823A',
+        fontWeight: "bold",
+        fontSize: 15
     },
     signupContainer: {
         flexDirection: "row",
@@ -193,7 +210,9 @@ const styles = StyleSheet.create({
     },
     signupButtonText: {
         marginLeft: 10,
-        color: '#04823A'
+        color: '#04823A',
+        fontWeight: "bold",
+        fontSize: 20
     },
     signupCard: {
         // marginLeft: 25,
@@ -207,7 +226,10 @@ const styles = StyleSheet.create({
 
     },
     viewStyle: {
-        height: "100%"
+        //height: "100%"
+        flex: 1,
+        alignContent: "center",
+        justifyContent: 'center'
     },
     letsLogin: {
         fontSize: 30,
@@ -218,6 +240,17 @@ const styles = StyleSheet.create({
         flex: 1,
         flexWrap: 'wrap',
         color: '#04823A'
+    },
+    loginButtonAndIndicatorContainer: {
+        flexDirection: 'row',
+        flex: 1
+    },
+    indicator: {
+        position: "absolute",
+        right: 25,
+        marginTop: 23,
+        marginRight: 15
+
     }
 });
 

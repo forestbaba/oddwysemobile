@@ -23,7 +23,7 @@ class Profile extends React.Component {
     }
     render() {
         return (
-            <View>
+            <View style={{ flex:1}}>
                 <ScrollView style={styles.scrollContainer}>
 
                     <View style={styles.parentContainer1}>
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#099349',
         backgroundColor: '#01a699',
         paddingBottom: 70,
+        flex:1
         // marginTop:-150
     },
     locationContainer2: {
@@ -208,6 +209,7 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     parentContainer2: {
+        flex:1,
         width: '100%',
         height: '100%',
         borderRadius: 25,
@@ -241,7 +243,7 @@ const styles = StyleSheet.create({
         //  marginTop: 150
     },
     scrollContainer: {
-        // flex:1
+        flex:1
     },
     settingsRow: {
         flexDirection: 'row',

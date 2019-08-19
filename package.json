@@ -8,6 +8,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@prince8verma/react-native-snackbar": "^1.2.2",
+    "axios": "^0.19.0",
     "react": "16.8.6",
     "react-native": "0.60.4",
     "react-native-cardview": "^2.0.2",
@@ -19,7 +21,10 @@
     "react-native-navigation": "^2.26.3",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^3.11.1",
-    "react-pose": "^4.0.8"
+    "react-pose": "^4.0.8",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
