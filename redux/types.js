@@ -1,2 +1,5 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 export const GET_ERRORS = 'GET_ERRORS'
+export const LOGIN_CLICKED = 'LOGIN_CLICKED'
+export const SIGNUP_CLICKED = 'SIGNUP_CLICKED'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'

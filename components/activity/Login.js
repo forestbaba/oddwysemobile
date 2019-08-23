@@ -7,16 +7,21 @@ import {
     Text, TouchableOpacity,
     StatusBar, TextInput, Image, ActivityIndicator,
 } from 'react-native';
+import {connect} from 'react-redux'
 import CardView from 'react-native-cardview'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
 import { bold } from 'ansi-colors';
 import PasswordFIeld from '../common/PasswordField'
+import { login } from '../../redux/action/authAction'
+import {Input} from 'native-base'
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
+            password:'',
             disabled: true,
             isLoading: false
         };
@@ -32,10 +37,29 @@ class Login extends Component {
         // },
 
     };
+
+    componentWillReceiveProps(nextProps) {
+
+        console.log('Login nextprops: ')
+        if (nextProps.user) {
+            console.log('User: ', nextProps.user)
+        }
+        
+    }
+    handleLogin() {
+        const user = {
+            username: this.state.username,
+            password: this.state.password
+        }
+
+
+        this.props.login(user)
+        //this.props.navigation.navigate('TabHolder')
+    }
     render() {
         return (
             <View style={styles.viewStyle}>
-                <ScrollView>
+                <ScrollView keyboardShouldPersistTaps={true}>
                     <Text style={styles.letsLogin}>Let's log you in...</Text>
 
                     <View style={styles.cardviewStyle}>
@@ -44,15 +68,25 @@ class Login extends Component {
                             cardMaxElevation={2}
                             cornerRadius={15}
                         >
-                            <TextInput
-                                placeholder="username or email"
+                            <Input
+                                placeholder="username"
                                 underlineColorAndroid='transparent'
-                                style={styles.TextInputStyleClass} />
+                                onChangeText={(uname) => this.setState({ username: uname })}
+                                value={this.state.username}
+                                style={styles.TextInputStyleClass}
+                            />
 
-                            <PasswordFIeld placeholder="password" />
+                            <PasswordFIeld placeholder="password"
+                                onChangeText={(password) => this.setState({ password })}
+                                value={this.state.password}/>
 
                             <View style={styles.loginButtonAndIndicatorContainer}>
-                                <TouchableOpacity style={styles.loginButton} disabled={this.state.disabled} onPress={() => this.props.navigation.navigate('TabHolder')}>
+                                <TouchableOpacity style={styles.loginButton}
+                                    // disabled={this.state.disabled}
+                                    // onPress={() => this.props.navigation.navigate('TabHolder')}>
+                                    onPress={
+                                        this.handleLogin.bind(this)
+                    }>
                                     <Text style={styles.loginButtonText}>Login</Text>
                                 </TouchableOpacity>
 
@@ -254,4 +288,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Login;
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors
+})
+
+export default connect(mapStateToProps, {login}) (Login);

@@ -5,8 +5,10 @@ import {
     ScrollView,
     View,
     Text, TouchableOpacity,
-    StatusBar, TextInput, Image, Easing
+    StatusBar, TextInput, Image, Easing,AsyncStorage
 } from 'react-native';
+import { connect } from 'react-redux'
+
 // import posed, { PoseGroup } from 'react-pose';
 
 
@@ -46,6 +48,7 @@ import SearchCard from '../common/SearchCard'
 class Timeline extends Component {
 
     componentWillMount() {
+        console.log('Inside timeline', AsyncStorage.getItem("USER_TOKEN"))
 
     }
 
@@ -118,6 +121,7 @@ class Timeline extends Component {
 
     render() {
 
+        console.log('The props i get: ', this.props)
         var drawerContent = (<View style={styles.drawerContent}>
             <View style={styles.leftTop} />
             <View style={styles.leftBottom}>
@@ -138,6 +142,7 @@ class Timeline extends Component {
 
 
         return (
+
 
             <View>
 
@@ -403,4 +408,8 @@ const styles = StyleSheet.create({
         paddingLeft: 8
     }
 })
-export default Timeline;
+
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps) (Timeline);

@@ -31,8 +31,7 @@ class PasswordField extends React.Component {
                         placeholderTextColor="gray"
                         placeholder={this.props.placeholder}
                         secureTextEntry={this.state.showPassword}
-                        onChangeText={(password) => this.setState({ password })
-                        }
+                        onChangeText={this.props.onChangeText}
                     />
                     <TouchableOpacity
                         onPress={this.toggleSwitch} style={styles.eyeIcon}>
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFFFFF",
         marginLeft: 35,
         marginRight: 55,
-        marginTop: 40,
+        marginTop: 20,
         paddingLeft: 10,
         paddingRight: 40
     },
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     },
     eyeIcon: {
         alignSelf: 'center',
-        marginTop: 39,
+        marginTop: 19,
         marginLeft: -83
     }
 })

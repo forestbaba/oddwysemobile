@@ -131,9 +131,9 @@ import Container from './components/ScreenContainer';
 class App extends Component {
   render() {
     return (
-      // <Provider store={store}>
+      <Provider store={store}>
         <Container />
-      // </Provider>
+       </Provider>
     );
   }
 }
