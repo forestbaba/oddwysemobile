@@ -3,18 +3,22 @@ import { View, Text, StyleSheet, Picker, TouchableOpacity, TextInput } from 'rea
 import Icon from 'react-native-vector-icons/FontAwesome'
 import GamePost from '../common/GamePost'
 import SnackBar from "../common/SnackBar";
-import Snackbar, { showSnackBar } from '@prince8verma/react-native-snackbar';
 import CreateGame from '../common/CreateGame'
 import { ScrollView } from 'react-native-gesture-handler';
+import { createPost } from '../../redux/action/postAction'
+import Snackbar, { showSnackBar } from '@prince8verma/react-native-snackbar';
+import { connect } from 'react-redux'
 
 class NewPostActivity extends React.Component {
     constructor() {
         super();
-        this.maxLength = 100;
 
         this.state = {
+            errors: {},
+            maxLength:100,
+
             textLength: 0,
-            gameInpute: '',
+            text: '',
             value: '',
             gameType: '',
             vendorType: '',
@@ -40,11 +44,32 @@ class NewPostActivity extends React.Component {
         this.removeElement = this.removeElement.bind(this)
 
     }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors })
 
+        }
+        if (nextProps.post) {
+            console.log('Post creating is successful: ', nextProps.post.post)
+            showSnackBar({
+            message: nextProps.post.post.message,
+            position: 'bottom',
+            confirmText: 'OK',
+            backgroundColor: "#323232",
+            duration: 1000,
+            // onConfirm: () => {
+            //     alert('hi')
+            // }
+        });
+        }
+      
+       
+
+    }
 
     onChangeText(text) {
         this.setState({
-            textLength: this.maxLength - text.length, gameInpute: text
+            textLength: this.state.maxLength - text.length, text: text
         });
     }
     DisplaySnackBar = (text) => {
@@ -56,7 +81,7 @@ class NewPostActivity extends React.Component {
             gameCreateOptionIsVisible: !this.state.gameCreateOptionIsVisible,
             hideBallOptionIcon: !this.setState.hideBallOptionIcon
         })
-        console.warn('Value of hideballoption: ',this.state.hideBallOptionIcon)
+        console.warn('Value of hideballoption: ', this.state.hideBallOptionIcon)
     }
 
 
@@ -96,16 +121,16 @@ class NewPostActivity extends React.Component {
         //console.warn(this.state.gameInpute)
 
         if (this.state.gameInpute === "" || this.state.gameInpute === undefined) {
-            showSnackBar({
-                message: "You can not add empty field",
-                position: 'bottom',
-                confirmText: 'OK',
-                backgroundColor: "#323232",
-                duration: 1000,
-                // onConfirm: () => {
-                //     alert('hi')
-                // }
-            });
+            // showSnackBar({
+            //     message: "You can not add empty field",
+            //     position: 'bottom',
+            //     confirmText: 'OK',
+            //     backgroundColor: "#323232",
+            //     duration: 1000,
+            //     // onConfirm: () => {
+            //     //     alert('hi')
+            //     // }
+            // });
         } else if (this.state.vendorType.toString() === "select" ||
             this.state.vendorType.toString() === "" || this.state.vendorType.toString() === undefined
         ) {
@@ -133,6 +158,11 @@ class NewPostActivity extends React.Component {
             this.textInput.clear()
         }
 
+    }
+
+    createCustomPost = () => {
+        // console.log(this.state.gameInpute, "auth", this.props.auth)
+        this.props.createPost({text: this.state.text})
     }
 
     renderSelectedView = () => {
@@ -353,6 +383,16 @@ class NewPostActivity extends React.Component {
                     <Text
                         style={styles.textCounter}> {this.state.textLength}/150</Text>
 
+
+                    <TouchableOpacity style={styles.postButtonCustom}
+                        // disabled={this.state.disabled}
+                        // onPress={() => this.props.navigation.navigate('TabHolder')}>
+                        onPress={
+                            this.createCustomPost.bind(this)
+                        }>
+                        <Text style={styles.postButtonTextCustom}>Post</Text>
+                    </TouchableOpacity>
+                    <Snackbar id={"root_app"} />
                 </View>
             )
 
@@ -388,7 +428,7 @@ class NewPostActivity extends React.Component {
         if (index > -1) {
             arrayElement.splice(index1, 1)
         }
-        console.warn('Remove element clicked: ',index1)
+        console.warn('Remove element clicked: ', index1)
     }
 
     render() {
@@ -405,14 +445,14 @@ class NewPostActivity extends React.Component {
                 {/* <Snackbar id={"root_app"} /> */}
                 <View style={{ flex: 1, backgroundColor: 'transparent' }}>
 
-                    
-                       
-                            <View style={{ width: '100%', backgroundColor: 'transparent', flexDirection: 'row',marginLeft:8,marginTop:10 }}>
-                                <TouchableOpacity onPress={this.showGameOption}>
-                                    <Icon name="soccer-ball-o" size={25} />
-                                </TouchableOpacity>
-                                <Text style={{ color: 'gray', marginLeft: 30 }}>Tap the ball to begin</Text>
-                            </View>
+
+
+                    <View style={{ width: '100%', backgroundColor: 'transparent', flexDirection: 'row', marginLeft: 8, marginTop: 10 }}>
+                        <TouchableOpacity onPress={this.showGameOption}>
+                            <Icon name="soccer-ball-o" size={25} />
+                        </TouchableOpacity>
+                        <Text style={{ color: 'gray', marginLeft: 30 }}>Tap the ball to begin</Text>
+                    </View>
 
                     {this.renderSelectedView()}
 
@@ -473,7 +513,7 @@ class NewPostActivity extends React.Component {
                                                 <Text style={styles.gameItemTitle}>{index.count} </Text>
                                                 <Text style={styles.gameItemTitle}>{index.name}</Text>
                                                 <Text style={styles.gameItemTitle}>{index.vendor}</Text>
-                                                <TouchableOpacity><Icon name='close' size={20} color="red" onPress={() => this.removeElement(index.count)}/></TouchableOpacity>
+                                                <TouchableOpacity><Icon name='close' size={20} color="red" onPress={() => this.removeElement(index.count)} /></TouchableOpacity>
                                             </View>
                                         )
                                     })
@@ -555,7 +595,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flex: 1
     },
-    postButton: {
+    postButtonCustom: {
         textAlign: 'center',
         height: 30,
         borderColor: '#A9A9A9',
@@ -566,7 +606,7 @@ const styles = StyleSheet.create({
         // marginRight: 25,
         // marginTop: 20,
         // marginBottom: 10,
-    }, postButtonText: {
+    }, postButtonTextCustom: {
         textAlign: 'center',
         width: '100%',
         color: '#FFFFFF',
@@ -640,6 +680,29 @@ const styles = StyleSheet.create({
     clubSelectContainer: {
         justifyContent: "center",
         alignItems: 'center'
-    }
+    },
+    postButton: {
+        textAlign: 'center',
+        height: 45,
+        borderColor: '#A9A9A9',
+        borderRadius: 20,
+        backgroundColor: "#04823A",
+        marginLeft: 35,
+        marginRight: 25,
+        marginTop: 20,
+        marginBottom: 10,
+        flex: 1
+    },
+    postButtonText: {
+        textAlign: 'center',
+        marginTop: 10,
+        color: '#FFFFFF',
+        fontWeight: "bold",
+        fontSize: 20
+    },
 })
-export default NewPostActivity
+const mapStateToProps = state => ({
+    post: state.post,
+    auth: state.auth
+})
+export default connect(mapStateToProps, { createPost })(NewPostActivity)

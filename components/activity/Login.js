@@ -7,23 +7,26 @@ import {
     Text, TouchableOpacity,
     StatusBar, TextInput, Image, ActivityIndicator,
 } from 'react-native';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import CardView from 'react-native-cardview'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FIcon from 'react-native-vector-icons/FontAwesome5';
-import { bold } from 'ansi-colors';
 import PasswordFIeld from '../common/PasswordField'
 import { login } from '../../redux/action/authAction'
-import {Input} from 'native-base'
+import { Input } from 'native-base'
+import * as Animatable from 'react-native-animatable';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password:'',
+            password: '',
             disabled: true,
-            isLoading: false
+            isLoading: false,
+            error: {},
+            errorMessage: '',
+            loginerror: false
         };
     }
     static navigationOptions = {
@@ -38,28 +41,57 @@ class Login extends Component {
 
     };
 
-    componentWillReceiveProps(nextProps) {
+    componentDidMount() {
+        console.log('///////////////////////////', this.props.auth)
+    }
 
-        console.log('Login nextprops: ')
-        if (nextProps.user) {
-            console.log('User: ', nextProps.user)
+    componentWillReceiveProps(nextProps) {
+        console.log('props type: ', nextProps.errors.error.message)
+
+        if (nextProps.errors.iserror === true) {
+            console.log('++++++++++++++++ ', nextProps.errors.iserror)
+            this.setState({
+                isLoading: !this.state.isLoading,
+                error: nextProps.errors,
+                loginerror: true,
+                errorMessage: nextProps.errors.error.message
+
+            })
+        } else if (nextProps.auth.isAuthenticated === true){
+
+            this.props.navigation.navigate('TabHolder')
         }
-        
+
+        // console.log('Login nextprops: ', nextProps.auth)
+        // if (nextProps.errors) {
+
+        // }
+        // else
+        // {
+        // }
+        //     this.props.navigation.navigate('TabHolder')
+        console.log('%%%%%%%%%%%%%%  ', JSON.stringify(this.state.error))
+
     }
     handleLogin() {
         const user = {
-            username: this.state.username,
+            emailorusername: this.state.username,
             password: this.state.password
         }
 
+        this.setState({ isLoading: true })
 
         this.props.login(user)
-        //this.props.navigation.navigate('TabHolder')
+        console.log('The Auth value: ', this.props.errors.error)
+    }
+    changeLoginError(){
+        this.setState({ loginerror: false })
+        console.log('Login error State has change: ', this.state.loginerror)
     }
     render() {
         return (
             <View style={styles.viewStyle}>
-                <ScrollView keyboardShouldPersistTaps={true}>
+                <ScrollView keyboardShouldPersistTaps={true} style={{ marginTop: 50 }}>
                     <Text style={styles.letsLogin}>Let's log you in...</Text>
 
                     <View style={styles.cardviewStyle}>
@@ -78,7 +110,7 @@ class Login extends Component {
 
                             <PasswordFIeld placeholder="password"
                                 onChangeText={(password) => this.setState({ password })}
-                                value={this.state.password}/>
+                                value={this.state.password} />
 
                             <View style={styles.loginButtonAndIndicatorContainer}>
                                 <TouchableOpacity style={styles.loginButton}
@@ -86,14 +118,20 @@ class Login extends Component {
                                     // onPress={() => this.props.navigation.navigate('TabHolder')}>
                                     onPress={
                                         this.handleLogin.bind(this)
-                    }>
-                                    <Text style={styles.loginButtonText}>Login</Text>
+                                    }>
+                                    <View>
+                                        {
+                                            this.state.isLoading === true ?
+                                                <ActivityIndicator size="large" color="#FFFFFF" style={{ marginTop: 3 }} visible={false} />
+                                                : <Text style={styles.loginButtonText}>Login</Text>
+
+                                        }
+
+                                    </View>
+
                                 </TouchableOpacity>
 
-                                {
-                                    this.state.isLoading === true ?
-                                        <ActivityIndicator size="large" color="#FFFFFF" style={styles.indicator} visible={false} />: null
-                                }
+
                             </View>
 
                             <View style={styles.socialsContainer}>
@@ -118,7 +156,6 @@ class Login extends Component {
                 </ScrollView>
 
                 <CardView
-                    cardElevation={2}
                     cardMaxElevation={2}
                     cornerRadius={15}
                     style={styles.signupCard}>
@@ -131,6 +168,32 @@ class Login extends Component {
                         </TouchableOpacity>
                     </View>
                 </CardView>
+
+                {
+                    this.state.loginerror === true ?
+
+                        <Animatable.View
+                            animation="bounceInUp" duration={1000} easing="ease-out"
+                            onAnimationEnd={() => {setInterval (this.changeLoginError.bind(this), 80000)}}
+                            // onTransitionEnd={setInterval(console.log('!!!!!!!!!!!!!!!!!!!!!!'), 7000)}
+                            style={{
+                                alignItems: 'center',
+                                alignContent: 'center',
+                                backgroundColor: 'red',
+                                flex: 1,
+                                alignItems: "center",
+                                justifyContent: 'center',
+                                bottom: 0,
+                                position: 'absolute',
+                                height: 60,
+                                elevation: 5,
+                                width: '100%'
+                            }}>
+                            <Animatable.Text style={{ fontSize: 18, fontStyle: "bold", color: 'white', padding: 5 }}>{this.state.errorMessage}</Animatable.Text>
+                        </Animatable.View> : null
+                }
+
+
             </View>
 
         )
@@ -169,6 +232,7 @@ const styles = StyleSheet.create({
         flex: 3,
         marginTop: 20,
         marginBottom: 70,
+        alignSelf: 'center',
 
         // flexWrap: "wrap",
         flexDirection: "column"
@@ -252,9 +316,8 @@ const styles = StyleSheet.create({
         // marginLeft: 25,
         marginRight: 25,
         height: 60,
-        position: 'absolute',
+        // position: 'absolute',
         bottom: 0,
-        flex: 1,
         width: "100%",
         marginBottom: -10
 
@@ -293,4 +356,4 @@ const mapStateToProps = state => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps, {login}) (Login);
+export default connect(mapStateToProps, { login })(Login);

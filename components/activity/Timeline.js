@@ -5,9 +5,12 @@ import {
     ScrollView,
     View,
     Text, TouchableOpacity,
-    StatusBar, TextInput, Image, Easing,AsyncStorage
+    StatusBar, TextInput, Image, Easing, AsyncStorage
 } from 'react-native';
 import { connect } from 'react-redux'
+import { getPersonalPost } from '../../redux/action/postAction'
+import { getCurrent } from '../../redux/action/authAction'
+import Moment from "moment";
 
 // import posed, { PoseGroup } from 'react-pose';
 
@@ -51,6 +54,10 @@ class Timeline extends Component {
         console.log('Inside timeline', AsyncStorage.getItem("USER_TOKEN"))
 
     }
+    componentDidMount() {
+        this.props.getCurrent()
+        console.log('personal posts: ', this.props.getPersonalPost())
+    }
 
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
@@ -75,24 +82,33 @@ class Timeline extends Component {
             isVisible: false,
 
 
-            names: [
-                { 'name': 'Ben', 'id': 1 },
-                { 'name': 'Susan', 'id': 2 },
-                { 'name': 'Robert', 'id': 3 },
-                { 'name': 'Mary', 'id': 4 },
-                { 'name': 'Daniel', 'id': 5 },
-                { 'name': 'Laura', 'id': 6 },
-                { 'name': 'John', 'id': 7 },
-                { 'name': 'Debra', 'id': 8 },
-                { 'name': 'Aron', 'id': 9 },
-                { 'name': 'Ann', 'id': 10 },
-                { 'name': 'Steve', 'id': 11 },
-                { 'name': 'Olivia', 'id': 12 }
-            ]
+            // names: [
+            //     { 'name': 'Ben', 'id': 1 },
+            //     { 'name': 'Susan', 'id': 2 },
+            //     { 'name': 'Robert', 'id': 3 },
+            //     { 'name': 'Mary', 'id': 4 },
+            //     { 'name': 'Daniel', 'id': 5 },
+            //     { 'name': 'Laura', 'id': 6 },
+            //     { 'name': 'John', 'id': 7 },
+            //     { 'name': 'Debra', 'id': 8 },
+            //     { 'name': 'Aron', 'id': 9 },
+            //     { 'name': 'Ann', 'id': 10 },
+            //     { 'name': 'Steve', 'id': 11 },
+            //     { 'name': 'Olivia', 'id': 12 }
+            // ]
+            posts: []
 
         }
         this.renderPostView = this.renderPostView.bind(this);
 
+    }
+
+    handleFetchSinglePost(postid) {
+        this.props.navigation.navigate('SinglePost', {
+            postid: postid,
+        })
+        // console.log('handleFetchSinglePost was clicked: ',postid)
+        // this.props.fetchSinglePost(postid)
     }
 
     renderPostView() {
@@ -121,7 +137,9 @@ class Timeline extends Component {
 
     render() {
 
-        console.log('The props i get: ', this.props)
+        const { posts } = this.props.post
+        // console.log('The props i get: ', posts)
+        //this.setState({posts:posts})
         var drawerContent = (<View style={styles.drawerContent}>
             <View style={styles.leftTop} />
             <View style={styles.leftBottom}>
@@ -140,7 +158,7 @@ class Timeline extends Component {
         };
         const { isVisible } = this.state;
 
-
+       // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', this.props.auth.fulluser.name)
         return (
 
 
@@ -148,40 +166,53 @@ class Timeline extends Component {
 
                 <ScrollView >
                     {
-                        this.state.names.map((item, index) => (
+                        posts.map((item, index) => (
 
                             <View style={styles.parentComponent}>
-                                <View key={item.id} style={styles.item} >
-                                    <View style={styles.parentComponent}>
+                                <View key={index} style={styles.item} >
+                                    <TouchableOpacity onPress={this.handleFetchSinglePost.bind(this, item._id)}>
 
-                                        <View style={styles.profileImage}>
-                                            <TouchableOpacity>
-                                                <Image
-                                                    source={require('../../assets/images/userimage.png')}
-                                                    style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
-                                                /></TouchableOpacity>
-                                        </View>
-                                        <View>
+                                        <View style={styles.parentComponent}>
 
-
-                                            <View style={styles.nameAndUsername}>
-                                                <Text style={styles.usernameText}>{item.name}</Text>
-                                                <Text style={styles.username}>jcole</Text>
+                                            <View style={styles.profileImage}>
+                                                <TouchableOpacity>
+                                                    <Image
+                                                        source={require('../../assets/images/userimage.png')}
+                                                        style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
+                                                    /></TouchableOpacity>
                                             </View>
+                                            <View>
 
-                                            <Text style={styles.postText}>Copy the following link into the website you'll use this
-                                            resource on. If you want to know more, read the the website you'll use this resource on.
-                                            If you want to know more, read the the website you'll use this resource on.
-                                             If you want to know more, read the</Text>
-                                            <View style={styles.postAtt}>
-                                                <Text style={styles.postTime}>
-                                                    <Icon name="clock-o" color="#707070" size={18} /> 3 hrs ago</Text>
-                                                <TouchableOpacity style={styles.likesView}><Text ><Icon name="heart" color="#707070" size={18} /> 15 </Text></TouchableOpacity>
-                                                <TouchableOpacity style={styles.commentButton}><Text ><Icon name="comments" color="#707070" size={18} /> 16</Text></TouchableOpacity>
+
+                                                <View style={styles.nameAndUsername}>
+                                                    <Text style={styles.usernameText}>{item.user[0].name}</Text>
+                                                    <View style={{
+                                                        flex: 1, paddingLeft: 10,
+                                                        paddingRight: 10
+                                                    }}><Text style={styles.username}>jcole</Text></View>
+                                                </View>
+
+
+                                                <View style={styles.postAndAttContainer}>
+                                                    <View style={{
+                                                        flex: 1, paddingLeft: 7,
+                                                        paddingRight: 10 }}>
+                                                        <Text style={styles.postBody}>{item.text}</Text>
+                                                    </View>
+                                                    
+                                                    <View style={styles.postAtt}>
+                                                        <Text style={styles.postTime}>
+                                                            <Icon name="clock-o" color="#707070" size={18} /> {Moment(item.date).fromNow(true)}</Text>
+                                                        <TouchableOpacity style={styles.likesView}><Text ><Icon name="heart" color="#707070" size={18} /> {item.likecounter} </Text></TouchableOpacity>
+                                                        <TouchableOpacity style={styles.commentButton}><Text ><Icon name="comments" color="#707070" size={18} /> {item.commentCounter}</Text></TouchableOpacity>
+                                                    </View>
+                                                </View>
                                             </View>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
+
                                 </View>
+
                             </View>
                         ))
                     }
@@ -252,7 +283,8 @@ class Timeline extends Component {
 const styles = StyleSheet.create({
     parentComponent: {
         flexDirection: 'row',
-        margin: 10
+        margin: 10,
+        flex: 1
 
     },
     secondChild: {
@@ -260,9 +292,11 @@ const styles = StyleSheet.create({
     },
     postAtt: {
         flexDirection: 'row',
+        justifyContent: "space-between",
+        width: "65%",
         marginTop: 10,
         marginLeft: 20,
-        marginRight: 100
+        marginRight: 10
 
     },
     usernameText: {
@@ -284,32 +318,34 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     postTime: {
-        flex: 1,
+        // flex: 1,
         textAlign: 'left',
         fontSize: 13,
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         color: '#707070',
     },
     likesView: {
-        flex: 1,
+        // flex: 1,
         textAlign: 'left',
         fontSize: 13,
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         color: '#707070',
     },
     commentButton: {
-        flex: 1,
+        // flex: 1,
         textAlign: 'left',
         fontSize: 13,
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         color: '#707070',
     },
     postText: {
         color: '#707070',
-        marginLeft: 20,
+        marginLeft: 120,
         marginRight: 20,
         textAlign: 'left',
-        paddingRight: 20
+        paddingRight: 20,
+        paddingLeft: 180
+
 
     },
     profileImage: {
@@ -406,10 +442,22 @@ const styles = StyleSheet.create({
     widgetCancel: {
         paddingBottom: 20,
         paddingLeft: 8
+    },
+    postAndAttContainer: {
+        flexDirection: "column"
+    },
+    postBody: {
+        // marginLeft: 20,
+        // flexGrow:1,
+        // width: "100%",
+        // flexWrap: 'wrap'
+        paddingLeft: 20,
+        paddingRight:10
     }
 })
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    post: state.post
 })
-export default connect(mapStateToProps) (Timeline);
+export default connect(mapStateToProps, { getPersonalPost, getCurrent })(Timeline);

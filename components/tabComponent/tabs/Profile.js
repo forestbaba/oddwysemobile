@@ -1,110 +1,173 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native'
 // import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Entypo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { bold } from 'ansi-colors';
+import { connect } from 'react-redux'
 import AccountSettings from '../../common/AccountSettings'
 
 class Profile extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            isSettingVisible: false
+            isSettingVisible: false,
+            user: {}
         }
     }
 
+    async componentDidMount() {
+        await AsyncStorage.getItem('user', (error, result) => {
+            this.setState({
+                user: result
+            })
+        })
 
+        console.log('profile users: ', this.state.user)
+    }
+
+    renderElement() {
+        const user = JSON.parse(JSON.stringify(this.state.user))
+        console.log('>>>>>>>>>>>>  ', user.success)
+
+        if (this.state.user !== undefined)
+            return <Text>grab</Text>;
+        return <Text>jjjjjjjjjjjjjjjjj</Text>;
+    }
     renderSettings = () => {
         this.setState({
             isSettingVisible: !this.state.isSettingVisible//toggles the visibilty of the text
         })
     }
     render() {
+        const user = this.state.user
+        // const {user} = this.state.user
+
+        // console.log('%%%%%%%%%%%%%%', Object.values(this.state.user))
+        const { fulluser } = this.props.auth
+        //this.props.auth.fulluser.name
         return (
-            <View style={{ flex:1}}>
-                <ScrollView style={styles.scrollContainer}>
+            <View style={{ flex: 1 }}>
+                {/* <ScrollView style={styles.scrollContainer}> */}
 
-                    <View style={styles.parentContainer1}>
-                        <View >
-                            <TouchableOpacity onPress={this.renderSettings.bind(this)} style={styles.gear} >
-                                <Ionicons name="md-settings" size={25} color="#FFFFFF" />
-                            </TouchableOpacity>
+                <View style={{ flexDirection: 'column', height: '50%' }}>
+
+                    <TouchableOpacity onPress={this.renderSettings.bind(this)}
+                        style={{ alignSelf: 'flex-end', elevation: 5, backgroundColor: 'red' }} >
+                        <Ionicons name="md-settings" size={25} color="#FFFFFF" />
+                    </TouchableOpacity>
+                    <View style={{ marginTop: 20 }}>
+                        <Image
+                            source={require('../../../assets/images/nature.jpg')}
+                            style={{
+                                height: 300, width: '100%', left: 0, right: 0
+                            }}
+                            resizeMode="contain"
+
+                        />
+
+                    </View>
+
+                    <View  >
+                        <View style={{ paddingLeft: 35 }}>
+                            <Text style={{ color: '#01a699' }}>Full name</Text>
+                            <Text style={{ fontSize: 25, fontWeight: 'bold', }}>Hames Paul</Text>
                         </View>
-
-                        <View style={styles.nameAndImageContainer}>
-                            <Image
-                                source={require('../../../assets/images/userimage.png')}
-                                style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
-                            />
-                            <View style={styles.nameContainer}>
-                                <Text style={styles.fullname}>James Paul</Text>
-                                <Text style={styles.username}>jPaul</Text>
-                            </View>
-
+                        <View style={styles.verticalDivider} />
+                        <View style={{ paddingLeft: 35 }}>
+                            <Text style={{ color: '#01a699' }}>User name</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold', }}>Killer man</Text>
                         </View>
-                        <View style={styles.locationContainer}>
-                            <View style={styles.locationContainer2}>
-                                <Icon name="location-pin" size={15} color="#FFFFFF" />
-                                <Text style={styles.locationTitle}>Eko hotel</Text>
-                            </View>
-
-                            <View>
-                                <View style={styles.messageAndFollowContainer}>
-                                    <TouchableOpacity style={styles.messageIcon}>
-                                        <Icon name="message" color="#FFFFFF" size={25} />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={styles.followContainer}>
-                                        <Icon name="plus" size={15} color="#099349" style={styles.plus} />
-                                        <Text style={styles.followButton}>Follow</Text>
-                                    </TouchableOpacity>
-                                </View>
-
-                            </View>
+                        <View style={styles.verticalDivider} />
+                        <View style={{ paddingLeft: 35 }}>
+                            <Text style={{ color: '#01a699' }}>Location</Text>
+                            <Text style={{ fontSize: 15, fontWeight: 'bold', }}>Ikeja</Text>
                         </View>
-
-                        <View style={styles.userAttributeContainer}>
-                            <View style={styles.followerAndFollowing}>
-                                <Text style={styles.attributeStyle}>
-                                    16000
-                        </Text>
-                                <Text style={styles.attributeTitle}>
-                                    Following
-                        </Text>
-                            </View>
-                            <View style={styles.verticalDivider} />
-                            <View style={styles.followerAndFollowing}>
-                                <Text style={styles.attributeStyle}>
-                                    1200
-                        </Text>
-                                <Text style={styles.attributeTitle}>
-                                    Following
-                        </Text>
-                            </View>
-                            <View style={styles.verticalDivider} />
-
-                            <View style={styles.followerAndFollowing}>
-                                <Text style={styles.attributeStyle}>
-                                    2000
-                        </Text>
-                                <Text style={styles.attributeTitle}>
-                                    Posts
-                        </Text>
-                            </View>
+                        <View style={styles.verticalDivider} />
+                        <View style={styles.verticalDivider} />
+                        <View style={{ paddingLeft: 35 }}>
+                            <Text style={{ color: '#01a699'}}>Bio</Text>
+                            <Text style={{ fontSize: 15, paddingRight:20 }}>jjhjhjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</Text>
                         </View>
                     </View>
-                    <View style={styles.parentContainer2}>
-                        <Text style={styles.feedTitle}>Feeds</Text>
+
+
+                    {/* <View style={styles.parentContainer1}>
+
+                    <View style={styles.nameAndImageContainer}>
+                        <Image
+                            source={require('../../../assets/images/userimage.png')}
+                            style={{ width: 50, height: 50, borderRadius: 400 / 2 }}
+                        />
+                        <View style={styles.nameContainer}>
+                            <Text style={styles.fullname}>{fulluser.name}</Text>
+                            <Text style={styles.username}>{fulluser.username}</Text>
+                        </View>
+
                     </View>
-                    {this.state.isSettingVisible ? <AccountSettings closeMe={this.renderSettings}
-                        navigate={this.props.navigation.navigate}
-                        destination="ChangePassword"
-                        changemobile="ChangeMobile"
-                        changeEMail="ChangeEmail" /> : null}
+                    <View style={styles.locationContainer}>
+                        <View style={styles.locationContainer2}>
+                            <Icon name="location-pin" size={15} color="#FFFFFF" />
+                            <Text style={styles.locationTitle}>Eko hotel</Text>
+                        </View>
+
+                        <View>
+                            <View style={styles.messageAndFollowContainer}>
+                                <TouchableOpacity style={styles.messageIcon}>
+                                    <Icon name="message" color="#FFFFFF" size={25} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.followContainer}>
+                                    <Icon name="plus" size={15} color="#099349" style={styles.plus} />
+                                    <Text style={styles.followButton}>Follow</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </View>
+                    </View>
+
+                    <View style={styles.userAttributeContainer}>
+                        <View style={styles.followerAndFollowing}>
+                            <Text style={styles.attributeStyle}>
+                                16000
+                        </Text>
+                            <Text style={styles.attributeTitle}>
+                                Following
+                        </Text>
+                        </View>
+                        <View style={styles.verticalDivider} />
+                        <View style={styles.followerAndFollowing}>
+                            <Text style={styles.attributeStyle}>
+                                1200
+                        </Text>
+                            <Text style={styles.attributeTitle}>
+                                Following
+                        </Text>
+                        </View>
+                        <View style={styles.verticalDivider} />
+
+                        <View style={styles.followerAndFollowing}>
+                            <Text style={styles.attributeStyle}>
+                                2000
+                        </Text>
+                            <Text style={styles.attributeTitle}>
+                                Posts
+                        </Text>
+                        </View>
+                    </View>
+                </View> */}
+                </View>
+                {/* <View>
+                    <Text style={styles.feedTitle}>Feeds</Text>{this.renderElement()}
+                </View> */}
+                {this.state.isSettingVisible ? <AccountSettings closeMe={this.renderSettings}
+                    navigate={this.props.navigation.navigate}
+                    destination="ChangePassword"
+                    changemobile="ChangeMobile"
+                    changeEMail="ChangeEmail" /> : null}
 
 
-                </ScrollView>
+                {/* </ScrollView> */}
             </View>
         )
     }
@@ -177,7 +240,7 @@ const styles = StyleSheet.create({
         // backgroundColor: '#099349',
         backgroundColor: '#01a699',
         paddingBottom: 70,
-        flex:1
+        // flex: 1
         // marginTop:-150
     },
     locationContainer2: {
@@ -188,12 +251,14 @@ const styles = StyleSheet.create({
 
     },
     verticalDivider: {
-        height: 30,
-        width: 0.5,
+        height: 0.5,
+        width: '100%',
         backgroundColor: '#DDDCDC',
         marginLeft: 3,
         marginRight: 3,
-        marginTop: 15
+        marginTop: 15,
+        marginTop: 10,
+        marginBottom:10
     },
     attributeStyle: {
         fontSize: 20,
@@ -209,7 +274,7 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     parentContainer2: {
-        flex:1,
+        flex: 1,
         width: '100%',
         height: '100%',
         borderRadius: 25,
@@ -243,7 +308,7 @@ const styles = StyleSheet.create({
         //  marginTop: 150
     },
     scrollContainer: {
-        flex:1
+        flex: 1
     },
     settingsRow: {
         flexDirection: 'row',
@@ -271,4 +336,8 @@ const styles = StyleSheet.create({
     }
 
 })
-export default Profile;
+
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+export default connect(mapStateToProps)(Profile);

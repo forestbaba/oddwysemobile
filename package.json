@@ -10,9 +10,13 @@
   "dependencies": {
     "@prince8verma/react-native-snackbar": "^1.2.2",
     "axios": "^0.19.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
     "native-base": "^2.13.5",
     "react": "16.8.6",
+    "react-moment": "^0.9.2",
     "react-native": "0.60.4",
+    "react-native-animatable": "^1.3.2",
     "react-native-cardview": "^2.0.2",
     "react-native-debugger": "^1.1.0",
     "react-native-dialog": "^5.6.0",
@@ -23,6 +27,7 @@
     "react-native-material-textinput": "^1.1.0",
     "react-native-navigation": "^2.26.3",
     "react-native-snackbar-component": "^1.1.0",
+    "react-native-user-defaults": "^0.1.5",
     "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^3.11.1",
     "react-pose": "^4.0.8",
@@ -31,7 +36,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "save": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

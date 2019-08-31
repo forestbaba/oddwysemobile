@@ -24,7 +24,10 @@ import Snackbar, { showSnackBar } from '@prince8verma/react-native-snackbar';
 import SnackBar from 'react-native-snackbar-component'
 import Dialog from "react-native-dialog";
 
+import * as Animatable from 'react-native-animatable';
 
+const showAnimation = "slideInUp"
+const hideAnimation = "slideOutDown"
 
 class Signup extends Component {
 
@@ -37,6 +40,8 @@ class Signup extends Component {
             name: '',
             password: '',
             mobile_no: '',
+            show: false,
+            anim: false,
 
             nameError: false,
             usernameError: false,
@@ -91,7 +96,19 @@ class Signup extends Component {
 
         // });
 
-
+        if (!this.state.show)
+            this.setState({
+                show: true,
+                anim: true
+            })
+        else {
+            this.setState({
+                anim: false
+            })
+            setTimeout(() => this.setState({
+                show: false
+            }), 500)
+        }
 
 
         this.state.name === undefined || this.state.name === '' ? this.setState({ nameError: true }) : this.setState({ nameError: false })
@@ -157,7 +174,9 @@ class Signup extends Component {
         }
         return isValidEmail
     }
-
+    gotoLogin = () => {
+        this.props.navigation.navigate('Login')
+    }
     render() {
         const { error } = this.state;
         console.log('The value of error im saying', error)
@@ -169,8 +188,11 @@ class Signup extends Component {
 
                     <ScrollView keyboardShouldPersistTaps={true}>
 
+                        {/* <Animatable.View animation={this.state.anim ? showAnimation : hideAnimation}> */}
+
 
                         <Text style={styles.letsLogin}>Let's Start from sign up...</Text>
+                        {/* </Animatable.View> */}
 
                         <View style={styles.cardviewStyle}>
                             <CardView
@@ -178,13 +200,15 @@ class Signup extends Component {
                                 cardMaxElevation={2}
                                 cornerRadius={15}>
                                 <View style={styles.inputAndIcons}>
-                                    <TextInput
+                                        <TextInput
                                         placeholder="username"
                                         underlineColorAndroid='transparent'
                                         onChangeText={(uname) => this.setState({ username: uname })}
                                         value={this.state.username}
                                         style={styles.TextInputStyleClass}
-                                    />
+                                    /> 
+                                    
+                                   
                                     {
                                         this.state.usernameError === true ?
                                             < EntypoIcon name="info-with-circle" size={20}
@@ -280,7 +304,7 @@ class Signup extends Component {
                         <View style={styles.signupContainer}>
                             <Text style={styles.signUpQuestionText}>Already have an account ?</Text>
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('Login')}
+                                onPress={this.gotoLogin.bind(this)}
                             >
                                 <Text style={styles.signupButtonText}>Login</Text>
                             </TouchableOpacity>

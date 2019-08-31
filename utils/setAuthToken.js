@@ -1,7 +1,7 @@
 import axios from "axios";
+axios.defaults.timeout = 5000;
 
 const setAuthToken = token => {
-  console.log('home')
   if (token) {
     axios.defaults.headers.common["Authorization"] = token;
     console.log('Saved')

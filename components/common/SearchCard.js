@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
 import SearchBar from './SearchBar'
 import { bold } from 'ansi-colors';
+import UserCard from '../common/UserCard'
 
 class SearchCard extends React.Component {
     constructor(props) {
@@ -10,6 +11,8 @@ class SearchCard extends React.Component {
     render() {
         return (
             <View style={styles.parentContainer}>
+
+                {/* <UserCard/> */}
                 <View style={styles.searchContainer}>
                     <Text style={styles.textExplore}>Explore Oddwyse</Text>
                     <SearchBar placeholder={this.props.placeholder} />
@@ -18,8 +21,8 @@ class SearchCard extends React.Component {
                 <View>
                     <ScrollView
                         horizontal={true}>
-                        <TouchableOpacity>
-                            <Text style={styles.circularText}>2 odds</Text>
+                        <TouchableOpacity onPress={() => this.props.navigate(this.props.destination)}>
+                            <Text style={styles.circularText}>People</Text>
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Text style={styles.circularText}>3 odds</Text>

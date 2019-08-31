@@ -13,7 +13,17 @@ import NewPostActivity from './activity/NewPostActivity'
 import ChangePassword from './activity/ChangePassword'
 import ChangeMobile from './activity/ChangeMobile'
 import ChangeEmail from './activity/ChangeEmail'
+import SinglePost from './activity/SinglePost'
+import SearchPeople from '../components/activity/SearchProple'
 const NavigationStack = createStackNavigator({
+
+    
+    TabHolder: {
+        screen: TabHolder, navigationOptions: {
+            header: null
+        }
+    },
+  
     Login: {
         screen: Login,
     },
@@ -23,6 +33,7 @@ const NavigationStack = createStackNavigator({
     ForgotPassword: {
         screen: ForgotPassword,
     },
+    
 
     TabHolder: {
         screen: TabHolder, navigationOptions: {
@@ -41,6 +52,15 @@ const NavigationStack = createStackNavigator({
 
 
                 />)
+        }
+    },
+    SearchPeople: {
+        screen: SearchPeople,
+    },
+    SinglePost: {
+        screen: SinglePost,
+        navigationOptions: {
+            title: "Post"
         }
     },
    
