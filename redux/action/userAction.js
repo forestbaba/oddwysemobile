@@ -4,7 +4,7 @@ import {
     BASE_URL, GET_ERRORS, FOLLOW_USER, FOLLOW_USER_SUCCESSFUL
 } from '../types'
 
-// const BASE_URLL = 'https://oddwyse.herokuapp.com'
+const BASE_URLL = 'https://oddwyse.herokuapp.com'
 
 export const fetchAllUser = () =>dispatch => {
 
@@ -12,7 +12,7 @@ export const fetchAllUser = () =>dispatch => {
         type:FETCH_ALL_USER
     })
 
-    axios.get(`${BASE_URL}/api/v1/user/getAllUsers`)
+    axios.get(`${BASE_URLL}/api/v1/user/getAllUsers`)
         .then(users => {
             console.log('Users', users)
             dispatch({

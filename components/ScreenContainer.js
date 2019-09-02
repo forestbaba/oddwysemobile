@@ -15,15 +15,23 @@ import ChangeMobile from './activity/ChangeMobile'
 import ChangeEmail from './activity/ChangeEmail'
 import SinglePost from './activity/SinglePost'
 import SearchPeople from '../components/activity/SearchProple'
+import ProfileTab from '../components/tabComponent/ProfileTab'
+
 const NavigationStack = createStackNavigator({
 
-    
-    TabHolder: {
-        screen: TabHolder, navigationOptions: {
-            header: null
-        }
-    },
-  
+
+    // TabHolder: {
+
+    //     screen: TabHolder, navigationOptions: {
+
+    //         header: null
+    //     },
+
+    // },
+    // ProfileTab: {
+    //     screen: ProfileTab
+    // },
+
     Login: {
         screen: Login,
     },
@@ -33,7 +41,7 @@ const NavigationStack = createStackNavigator({
     ForgotPassword: {
         screen: ForgotPassword,
     },
-    
+
 
     TabHolder: {
         screen: TabHolder, navigationOptions: {
@@ -63,7 +71,7 @@ const NavigationStack = createStackNavigator({
             title: "Post"
         }
     },
-   
+
     ChangePassword: {
         screen: ChangePassword, navigationOptions: {
             title: "Change Password"

@@ -19,9 +19,11 @@ import CardView from 'react-native-cardview'
 import { StackNavigator } from 'react-navigation';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Iconn from 'react-native-vector-icons/FontAwesome5';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import startMainTab from './startMainTab';
 import Drawer from 'react-native-drawer-menu';
 import SearchCard from '../common/SearchCard'
+import * as Animatable from 'react-native-animatable';
 
 
 
@@ -80,6 +82,7 @@ class Timeline extends Component {
         this.state = {
             renderPost: false,
             isVisible: false,
+            isOptionVisible: false,
 
 
             // names: [
@@ -134,6 +137,11 @@ class Timeline extends Component {
     //     startMainTab();
     // }
 
+    showOptions() {
+        console.log('On long press called', this.state.isOptionVisible)
+        this.setState({ isOptionVisible: true })
+    }
+
 
     render() {
 
@@ -158,19 +166,79 @@ class Timeline extends Component {
         };
         const { isVisible } = this.state;
 
-       // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', this.props.auth.fulluser.name)
+        // console.log('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', this.props.auth.fulluser.name)
         return (
 
 
-            <View>
+            <View style={{ flex: 1 }}>
 
+                {
+                    this.state.isOptionVisible === true ?
+                        <Animatable.View pointerEvents="none"
+                            animation="bounceInUp" duration={500} easing="ease-out"
+
+                            style={{
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                            bottom: 0, right: 0, position: "absolute",
+                            left: 0, top: 0,elevation:2,flex:1
+                        }}>
+                            {/* <View style={{
+                                top: 0, right: 0,
+                                left: 0, position: "absolute",
+                                flex: 1, height: "100%"
+                            }}>
+
+                            </View> */}
+                            <View style={{
+                                backgroundColor: "white",
+                                bottom: 0, right: 0,
+                                left: 0,
+                                opacity:1,
+                                //top: -200,
+                                position: "absolute",
+                                borderTopLeftRadius: 25,
+                                borderTopRightRadius: 25,
+                                padding: 20,
+                                elevation:20,
+                                flex: 1
+                            }}>
+                                <TouchableOpacity style={{ flexDirection: "row", paddingBottom: 15 }}>
+                                    <Iconn name="heart"
+                                        size={18} color="#707070" />
+                                    <Text style={{ paddingLeft: 35, paddingRight: 10, fontSize: 18, fontWeight: "normal" }}>Like</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ flexDirection: "row", paddingBottom: 15 }}>
+                                    <Iconn name="comment-alt"
+                                        size={18} color="#707070" />
+                                    <Text style={{ paddingLeft: 35, paddingRight: 10, fontSize: 18, fontWeight: "normal" }}>Comment</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ flexDirection: "row", paddingBottom: 15 }}>
+                                    <Iconn name="star"
+                                        size={18} color="#707070" />
+                                    <Text style={{ paddingLeft: 35, paddingRight: 10, fontSize: 18, fontWeight: "normal" }}>Star</Text>
+
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ flexDirection: "row", paddingBottom: 15 }}>
+                                    <MCIcon name="delete-outline"
+                                        size={23} color="#707070" />
+                                    <Text style={{ paddingLeft: 35, paddingRight: 10, fontSize: 18, fontWeight: "normal" }}>Delete</Text>
+
+                                </TouchableOpacity>
+                            </View>
+
+                        </Animatable.View> : null
+                }
                 <ScrollView >
                     {
                         posts.map((item, index) => (
 
                             <View style={styles.parentComponent}>
                                 <View key={index} style={styles.item} >
-                                    <TouchableOpacity onPress={this.handleFetchSinglePost.bind(this, item._id)}>
+                                    <TouchableOpacity
+                                        onLongPress={this.showOptions.bind(this)}
+                                        onPress={this.handleFetchSinglePost.bind(this, item._id)}>
 
                                         <View style={styles.parentComponent}>
 
@@ -196,10 +264,11 @@ class Timeline extends Component {
                                                 <View style={styles.postAndAttContainer}>
                                                     <View style={{
                                                         flex: 1, paddingLeft: 7,
-                                                        paddingRight: 10 }}>
+                                                        paddingRight: 10
+                                                    }}>
                                                         <Text style={styles.postBody}>{item.text}</Text>
                                                     </View>
-                                                    
+
                                                     <View style={styles.postAtt}>
                                                         <Text style={styles.postTime}>
                                                             <Icon name="clock-o" color="#707070" size={18} /> {Moment(item.date).fromNow(true)}</Text>
@@ -269,7 +338,6 @@ class Timeline extends Component {
                         </View>
                     </PoseGroup>
                 } */}
-
 
 
             </View>
@@ -452,7 +520,7 @@ const styles = StyleSheet.create({
         // width: "100%",
         // flexWrap: 'wrap'
         paddingLeft: 20,
-        paddingRight:10
+        paddingRight: 10
     }
 })
 

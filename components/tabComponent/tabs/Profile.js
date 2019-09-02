@@ -7,7 +7,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { bold } from 'ansi-colors';
 import { connect } from 'react-redux'
 import AccountSettings from '../../common/AccountSettings'
-
+import Containerx from '../../Profile/ProfileTabParent'
 class Profile extends React.Component {
     constructor(props) {
         super(props)
@@ -48,7 +48,11 @@ class Profile extends React.Component {
         const { fulluser } = this.props.auth
         //this.props.auth.fulluser.name
         return (
+
+
+
             <View style={{ flex: 1 }}>
+
                 {/* <ScrollView style={styles.scrollContainer}> */}
 
                 <View style={{ flexDirection: 'column', height: '50%' }}>
@@ -57,7 +61,7 @@ class Profile extends React.Component {
                         style={{ alignSelf: 'flex-end', elevation: 5, backgroundColor: 'red' }} >
                         <Ionicons name="md-settings" size={25} color="#FFFFFF" />
                     </TouchableOpacity>
-                    <View style={{ marginTop: 20 }}>
+                    <View style={{ marginTop: -20 }}>
                         <Image
                             source={require('../../../assets/images/nature.jpg')}
                             style={{
@@ -69,28 +73,7 @@ class Profile extends React.Component {
 
                     </View>
 
-                    <View  >
-                        <View style={{ paddingLeft: 35 }}>
-                            <Text style={{ color: '#01a699' }}>Full name</Text>
-                            <Text style={{ fontSize: 25, fontWeight: 'bold', }}>Hames Paul</Text>
-                        </View>
-                        <View style={styles.verticalDivider} />
-                        <View style={{ paddingLeft: 35 }}>
-                            <Text style={{ color: '#01a699' }}>User name</Text>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', }}>Killer man</Text>
-                        </View>
-                        <View style={styles.verticalDivider} />
-                        <View style={{ paddingLeft: 35 }}>
-                            <Text style={{ color: '#01a699' }}>Location</Text>
-                            <Text style={{ fontSize: 15, fontWeight: 'bold', }}>Ikeja</Text>
-                        </View>
-                        <View style={styles.verticalDivider} />
-                        <View style={styles.verticalDivider} />
-                        <View style={{ paddingLeft: 35 }}>
-                            <Text style={{ color: '#01a699'}}>Bio</Text>
-                            <Text style={{ fontSize: 15, paddingRight:20 }}>jjhjhjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj</Text>
-                        </View>
-                    </View>
+
 
 
                     {/* <View style={styles.parentContainer1}>
@@ -157,6 +140,8 @@ class Profile extends React.Component {
                     </View>
                 </View> */}
                 </View>
+                    <Containerx />
+
                 {/* <View>
                     <Text style={styles.feedTitle}>Feeds</Text>{this.renderElement()}
                 </View> */}
@@ -258,7 +243,7 @@ const styles = StyleSheet.create({
         marginRight: 3,
         marginTop: 15,
         marginTop: 10,
-        marginBottom:10
+        marginBottom: 10
     },
     attributeStyle: {
         fontSize: 20,

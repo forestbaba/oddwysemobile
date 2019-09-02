@@ -11,8 +11,8 @@ import userDefaults from 'react-native-user-defaults'
 axios.defaults.timeout = 5000;
 
 
-const BASE_URL = 'http://10.0.3.2:2000'
-// const BASE_URL = 'https://oddwyse.herokuapp.com'
+// const BASE_URL = 'http://10.0.3.2:2000'
+const BASE_URL = 'https://oddwyse.herokuapp.com'
 
 
 export const signUp = userData => dispatch => {

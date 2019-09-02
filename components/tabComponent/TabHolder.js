@@ -28,48 +28,48 @@ const TabNavigator = createMaterialTopTabNavigator({
                 let IconComponent = Ionicons;
                 let iconName;
                 if (routeName === 'TimeLine') {
-                    title="time"
+                    title = "time"
                     // iconName = `ios-basketball${focused ? '' : '-outline'}`;
                     iconName = `ios-basketball${focused ? '' : ''}`;
                     // Sometimes we want to add badges to some icons. 
                     // You can check the implementation below.
-                   // IconComponent = HomeIconWithBadge;
+                    // IconComponent = HomeIconWithBadge;
                 }
                 else if (routeName === 'Profile') {
                     iconName = `ios-person`;
                 } else if (routeName === "Notification") {
-                    iconName ='ios-notifications'
-                    
+                    iconName = 'ios-notifications'
+
                 }
                 else if (routeName === "Search") {
-                    iconName ='ios-search'
-                    
+                    iconName = 'ios-search'
+
                 }
 
                 // You can return any component that you like here!
                 return <IconComponent name={iconName} size={25} color={tintColor} />;
             },
         }),
-        order: ['TimeLine', 'Search','Profile', 'Notification'],
+        order: ['TimeLine', 'Search', 'Profile', 'Notification'],
         animationEnabled: true,
-       
+
         tabBarOptions: {
-            showIcon:true,
+            showIcon: true,
             activeTintColor: '#01a699',
             inactiveTintColor: 'gray',
             labelStyle: {
                 fontSize: 12,
                 fontStyle: "normal",
-                textTransform:'capitalize'
+                textTransform: 'capitalize'
 
             },
             style: {
                 backgroundColor: 'transparent',
                 borderColor: 'transparent',
-                borderBottomWidth:0
-        }
+                borderBottomWidth: 0
+            }
         },
-       
+
         // tabBarOptions: {
         //     labelStyle: {
         //         fontSize: 12,
@@ -81,6 +81,6 @@ const TabNavigator = createMaterialTopTabNavigator({
     })
 
 
-    
+
 
 export default createAppContainer(TabNavigator)
